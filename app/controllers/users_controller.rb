@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     if session[:admin_id] == nil
       authorize_user
       if @user.id != session[:user_id]
-        authorize_user
+        redirect_to_home
       end
     else
       authorize_admin
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
     if session[:admin_id] == nil
       authorize_user
       if @user.id != session[:user_id]
-        authorize_user
+        redirect_to_home
       end
     else
       authorize_admin
@@ -67,7 +67,7 @@ class UsersController < ApplicationController
     if session[:admin_id] == nil
       authorize_user
       if @user.id != session[:user_id]
-        authorize_user
+        redirect_to_home
       end
     else
       authorize_admin
@@ -90,7 +90,7 @@ class UsersController < ApplicationController
     if session[:admin_id] == nil
       authorize_user
       if @user.id != session[:user_id]
-        authorize_user
+        redirect_to_home
       end
     else
       authorize_admin
@@ -111,5 +111,12 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name, :password, :password_confirmation)
+    end
+
+    def redirect_to_home
+      respond_to do |format|
+        format.html { redirect_to shopper_url, :flash => { :error => "Forbidden Operation" } }
+        format.json { render :show, status: :created, location: @user }
+      end
     end
 end
