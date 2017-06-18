@@ -1,0 +1,52 @@
+<% if notice %>
+  <p id="notice"><%= notice %></p>
+<% end %>
+
+<p>
+  <strong>Name:</strong>
+  <%= @order.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @order.address %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @order.email %>
+</p>
+
+<p>
+  <strong>Paytype:</strong>
+  <%= @order.paytype %>
+</p>
+
+<strong>Total Price:</strong>
+<%= @order.total_price %>
+</p>
+
+<p>
+  <strong>Ordered Products:</strong>
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.lineitems.each do |lineitem| %>
+      <tr>
+        <td><a href="/products/<%= lineitem.product_id %>"><%= lineitem.product_id %></a></td>
+        <td><%= lineitem.quantity %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if session[:admin_id] %>
+<%= link_to 'Edit', edit_order_path(@order) %> |
+<% end %>
+<%= link_to 'Back', orders_path %>

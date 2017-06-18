@@ -1,0 +1,46 @@
+<% if notice %>
+  <p id="notice"><%= notice %></p>
+<% end %>
+
+<h1>Product Catalog</h1>
+
+<div class='display_in_line'>
+  <form class="form-wrapper">
+    <input type="text" id="search" name="q" placeholder="Search for..." >
+    <span>-</span>
+    <input type="number" class="price" name="minp" min="0" step='0.01' placeholder="Min price" >
+    <span>/</span>
+    <input type="number" class="price" name="maxp" min="0" step='0.01' placeholder="Max price" >
+    <input type="submit" value="go" id="submit">
+  </form>
+</div>
+
+<table>
+
+  <% @products.each do |product| %>
+    <tr class="<%= cycle('list_line_odd', 'list_line_even')%>">
+      <td><%= image_tag(product.image, class: 'list_image') %></td>
+
+      <td class="list_description">
+        <dl>
+          <dt><%= product.name %></dt>
+          <dd>
+            <%= product.description %>
+            <br><br>
+            <%= number_to_currency(product.price) %>
+          </dd>
+        </dl>
+      </td>
+
+      <td class="list_actions">
+        <%= link_to 'Show', product %><br>
+        <%= link_to 'Edit', edit_product_path(product) %><br>
+        <%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<br>
+
+<%= link_to 'New Product', new_product_path %>

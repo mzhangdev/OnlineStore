@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shop</title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body class='<%= controller.controller_name%>'>
+    <!--%= image_tag("logo.png") %-->
+    <header>
+      <h1 class="center">
+        Online Store
+      </h1>
+      <div class="nav_container">
+        <ul class="nav">
+          <div class="name">
+            <!--li class="name">Welcome to the Online Store!</li-->
+            <li><a href="/">Home</a></li>
+            <li><a href="/">News</a></li>
+            <li><a href="/">Contact</a></li>
+            <li><%= link_to 'Cart', @cart %></li>
+            <!--li><a href="/carts/<%=@cart.id%>">Cart</a></li-->
+          </div>
+          <div class="name2">
+          <!--/ul-->
+          <!--ul class="nav"-->
+            <% unless session[:admin_id] || session[:user_id] %>
+              <li><a href="/login">Login</a></li>
+            <% end%>
+            <% if session[:user_id] %>
+              <li><a href="/logout">Logout</a></li>
+              <li><a href="/orders">My Oders</a></li>
+              <li><a href="/users/<%= session[:user_id]%>">My Profile</a></li>
+            <% end %>
+            <% if session[:admin_id] %>
+              <li><a href="/logout">Logout</a></li>
+              <li><%= link_to 'Orders',   orders_path   %></li>
+              <li><%= link_to 'Products', products_path %></li>
+              <li><%= link_to 'Users',    users_path    %></li>
+            <% end %>
+          </div>
+        </ul>
+      </div>
+    </header>
+
+    <div id="columns">
+      <div id="side">
+        <div id='cart'>
+           <%= render(@cart) %>
+        </div>
+      </div>
+      <div id="main">
+          <%= yield %>
+      </div>
+    </div>
+
+  </body>
+</html>

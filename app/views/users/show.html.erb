@@ -1,0 +1,15 @@
+<%if notice %>
+<p id="notice"><%= notice %></p>
+<% end %>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<% if session[:user_id] %>
+  <%= link_to 'Back', root_path %>
+<% else %>
+  <%= link_to 'Back', users_path %>
+<% end %>
