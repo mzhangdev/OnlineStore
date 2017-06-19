@@ -36,9 +36,6 @@ class OrdersController < ApplicationController
     end
     if session[:admin_id] == nil
       authorize_user
-      if @user.id != session[:user_id]
-        authorize_user
-      end
     else
       authorize_admin
     end
